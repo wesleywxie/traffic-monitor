@@ -53,6 +53,7 @@ jobs:
 
       # Step 4: Upload binaries to the release
       - name: Upload Linux and macOS binaries
+        uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
           asset_path: ./bin/monitor-${{ matrix.goos }}-${{ matrix.goarch }}
