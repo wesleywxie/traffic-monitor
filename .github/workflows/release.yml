@@ -1,9 +1,8 @@
 name: Build Linux and macOS Binaries
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 jobs:
   build-and-upload:
