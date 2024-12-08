@@ -1,14 +1,14 @@
-.PHONY: all monitor clean
+.PHONY: all build clean
 
 REVISION := $(shell git rev-parse HEAD || unknown)
 BUILTAT := $(shell date +%Y-%m-%dT%H:%M:%S)
 GO_LDFLAGS ?= -s -X github.com/wesleywxie/traffic-monitor/pkg/versioninfo.REVISION=$(REVISION) \
               -X github.com/wesleywxie/traffic-monitor/pkg/versioninfo.BUILTAT=$(BUILTAT)
-BINARY=monitor
+BINARY=traffic-monitor
 
-all: monitor
+all: build
 
-monitor:
+build:
 	mkdir -p bin
 	go build -ldflags "$(GO_LDFLAGS)" -o ./bin/$(BINARY)-$(GOOS)-$(GOARCH) ./cmd/main.go
 
