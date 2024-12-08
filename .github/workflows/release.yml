@@ -6,24 +6,6 @@ on:
       - '*'
 
 jobs:
-  # Step 1: Create Release
-  create-release:
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: "Release ${{ github.ref_name }}"
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-   # Step 2: Build and Upload Binaries
   build-and-upload:
     runs-on: ubuntu-latest
     needs: create-release  # Ensure release is created first
