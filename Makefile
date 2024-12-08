@@ -10,7 +10,7 @@ all: monitor
 
 monitor:
 	mkdir -p bin
-	go build -ldflags "$(GO_LDFLAGS)" -o ./bin/$(BINARY) ./src/main.go
+	go build -ldflags "$(GO_LDFLAGS)" -o ./bin/$(BINARY)-$(GOOS)-$(GOARCH) ./cmd/main.go
 
 # Clean up generated files
 clean:

@@ -1,0 +1,40 @@
+name: Build Linux and macOS Binaries
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, darwin]   # Linux and macOS
+        goarch: [amd64, arm64]  # Architectures for Linux and macOS
+        exclude:                # Exclude invalid combinations
+          - goos: darwin
+            goarch: amd64
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Go
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.23'
+
+      # Step 3: Build binaries with Makefile
+      - name: Build binary
+        run: |
+          mkdir -p bin
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} make
+
+      # Step 4: Upload binaries as artifacts
+      - name: Upload binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: binaries-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: ./bin
